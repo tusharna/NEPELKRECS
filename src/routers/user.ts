@@ -1,5 +1,6 @@
 const express=require("express");
 const bcrypt = require("bcrypt");
+import logger from "../middleware/logger";
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const router=express.Router();
@@ -18,6 +19,7 @@ const users: User[] = [
 let refreshTokens: string[] = [];
 
 router.get("/users", (req: Request, res: Response) => {
+    logger.info('fetching users');    
     res.send(users);
 });
 
@@ -28,6 +30,7 @@ router.post("/users", async (req: Request, res: Response) => {
         const hashedpwd = await bcrypt.hash(user.pwd, salt);
         const userhasedpassword: User = { uid: user.uid, pwd: hashedpwd };
         users.push(userhasedpassword);
+        logger.debug("User added successfully");
         res.send(users);
     } catch (error) {
         console.error(error);
