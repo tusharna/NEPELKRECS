@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
+import logger from "../middleware/logger";
+
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack); // Log the error stack for debugging purposes
+  
+  logger.error(err.stack); // Log the error stack for debugging purposes
 
   // Set a default status code and error message
   let statusCode = 500;
