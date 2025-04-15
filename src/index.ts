@@ -2,6 +2,7 @@ const express = require("express");
 
 const verifyAuthToken = require("./middleware/auth");
 const userRouter = require("./routers/user");
+const playerRouter = require("./routers/player");
 import { errorHandler } from "./middleware/errorHandler";
 import { Request, Response } from "express";
 require("dotenv").config();
@@ -14,8 +15,10 @@ const app = express();
 app.use(express.json());
 
 app.use(userRouter);
-
+app.use(playerRouter);
 app.use(morganMiddleware);
+
+
 
 const port = process.env.PORT || 3000;
 

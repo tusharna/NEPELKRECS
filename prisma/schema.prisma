@@ -14,3 +14,16 @@ model User {
   password String
   refreshToken String? @unique  
 }
+
+model Players {
+  id    Int     @id @default(autoincrement())
+  Name    String
+  Surname     String
+  Country   String
+  DOB   DateTime?
+  Age   Int
+  Specialism    String
+  Batting   String
+  Bowiling    String?
+  Team    String?  
+}
