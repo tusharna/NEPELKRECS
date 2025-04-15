@@ -8,10 +8,11 @@ import { Request, Response } from "express";
 require("dotenv").config();
 import logger from "./middleware/logger";
 import morganMiddleware from "./middleware/morganMiddleware";
+import { setupSwagger } from "../swagger";
 
 
 const app = express();
-
+setupSwagger(app);
 app.use(express.json());
 
 app.use(userRouter);
