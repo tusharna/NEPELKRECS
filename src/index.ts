@@ -6,6 +6,7 @@ import { errorHandler } from "./middleware/errorHandler";
 import { Request, Response } from "express";
 require("dotenv").config();
 import logger from "./middleware/logger";
+import morganMiddleware from "./middleware/morganMiddleware";
 
 
 const app = express();
@@ -14,7 +15,7 @@ app.use(express.json());
 
 app.use(userRouter);
 
-
+app.use(morganMiddleware);
 
 const port = process.env.PORT || 3000;
 

@@ -1,19 +1,23 @@
 const morgan = require('morgan');
 
-import logger from "./logger";
 
 
-const morganFormat = ':method :url :status :res[content-length] - :response-time ms';
+import logger from './logger';
 
-function messageHandler(message: string) {
-    console.log(message.trim());
-    logger.info("Request received", JSON.parse(message.trim()));
-}
+// Create a stream object with a 'write' function that uses Winston
+const stream = {
+    write: (message: string) => logger.info(message.trim()),
+};
 
-const morganMiddleware=morgan(morganFormat, {
-    stream:{
-        write:messageHandler
-    }
-})
+// Skip logging during tests or based on custom logic
+const skip = () => {
+    return process.env.NODE_ENV === 'test';
+};
+
+// Setup Morgan format + hook into Winston
+const morganMiddleware = morgan(
+    ':method :url :status :res[content-length] - :response-time ms',
+    { stream, skip }
+);
 
 export default morganMiddleware;
