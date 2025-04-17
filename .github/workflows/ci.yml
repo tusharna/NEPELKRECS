@@ -20,8 +20,8 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag $DOCKER_USERNAME/cicd:$(date +%s)
-        
+        run: docker build . --file Dockerfile --tag $DOCKER_USERNAME/cicd
+
       - name: Push the Docker image
-        run: docker push $DOCKER_USERNAME/cicd:$(date +%s)
+        run: docker push $DOCKER_USERNAME/cicd
 
