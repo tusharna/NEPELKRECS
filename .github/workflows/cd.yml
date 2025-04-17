@@ -4,15 +4,13 @@ on:
   workflow_run:
     workflows: ["Docker Image CI"]
     types:
-      - completed  
-  
+      - completed
+
 jobs:
-
   build:
+    runs-on: self-hosted
 
-    runs-on: self-hosted    
-
-    steps:      
+    steps:
       - name: Pull Docker image
         run: sudo docker pull tusharna/cicd:latest
 
@@ -21,4 +19,3 @@ jobs:
 
       - name: Run Docker Container
         run: sudo docker run -d --name cicd-conainer -p 3006:3006 tusharna/cicd
-
