@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
 
+import prisma from "../lib/prisma";
 const express = require("express");
 const bcrypt = require("bcrypt");
 import logger from "../middleware/logger";
@@ -9,7 +9,7 @@ const router = express.Router();
 import { Request, Response } from "express";
 
 
-const prisma = new PrismaClient();
+
 
 router.get("/users", async (req: Request, res: Response) => {
     logger.info('fetching users');
