@@ -32,8 +32,8 @@ jobs:
       - name: Pull Docker image
         run: sudo docker pull tusharna/cicd:latest
 
-      - name: Delete old Docker image
-        run: sudo docker rm -f cicd
+      #- name: Delete old Docker image
+       # run: sudo docker rm -f cicd
 
       - name: Run Docker Container
         run: sudo docker run -d --name cicd -p 3006:3006 tusharna/cicd
