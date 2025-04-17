@@ -33,8 +33,8 @@ jobs:
         run: sudo docker pull tusharna/cicd:latest
 
       - name: Delete old Docker image
-        run: sudo docker rm -f cicd-container || true
+        run: sudo docker rm -f cicd || true
 
       - name: Run Docker Container
-        run: sudo docker run -d --name cicd-container -p 3006:3006 tusharna/cicd
+        run: sudo docker run -d --name cicd -p 3006:3006 tusharna/cicd
 
