@@ -33,7 +33,7 @@ app.get("/orders", verifyAuthToken, (req: Request, res: Response) => {
 
 
 app.get("/error", (req: Request, res: Response) => {
-    throw new Error("Error fetching orders");
+    throw new Error("Error fetching orders examples");
 });
 
 app.use(errorHandler)
