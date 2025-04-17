@@ -27,7 +27,7 @@ const port = process.env.PORT || 3000;
 
 app.get("/orders", verifyAuthToken, (req: Request, res: Response) => {
 
-    logger.info("Fetching orders");
+    logger.info("Fetching orders examples");
     res.send("Hello World");
 });
 
