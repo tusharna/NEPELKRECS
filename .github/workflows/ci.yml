@@ -25,3 +25,16 @@ jobs:
       - name: Push the Docker image
         run: docker push $DOCKER_USERNAME/cicd
 
+  cd:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull Docker image
+        run: sudo docker pull tusharna/cicd:latest
+
+      - name: Delete old Docker image
+        run: sudo docker rm -f cicd-container || true
+
+      - name: Run Docker Container
+        run: sudo docker run -d --name cicd-container -p 3006:3006 tusharna/cicd
+
