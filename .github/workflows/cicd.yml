@@ -23,7 +23,7 @@ jobs:
         run: docker compose build
 
       - name: Tag the app image
-        run: docker tag nepelkrecs_app ${{ secrets.DOCKER_USERNAME }}/cicd:latest
+        run: docker tag tusharna/cicd:latest ${{ secrets.DOCKER_USERNAME }}/cicd:latest
 
       - name: Push the Docker image
         run: docker push $DOCKER_USERNAME/cicd:latest
