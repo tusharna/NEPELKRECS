@@ -1,7 +1,7 @@
 
 import prisma from "../lib/prisma";
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 import logger from "../middleware/logger";
 require("dotenv").config();
 const jwt = require("jsonwebtoken");

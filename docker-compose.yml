@@ -25,6 +25,8 @@ services:
     ports:
       - 3006:3006
     depends_on:
-      - db    
+      - db
+    env_file:
+      - .env      
 
   
