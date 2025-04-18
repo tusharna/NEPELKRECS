@@ -20,7 +20,7 @@ jobs:
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Build Docker image using Docker Compose
-        run: docker-compose build
+        run: docker compose build
 
       - name: Tag the app image
         run: docker tag app ${{ secrets.DOCKER_USERNAME }}/cicd:latest
