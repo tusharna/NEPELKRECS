@@ -28,7 +28,7 @@ const port = process.env.PORT || 3000;
 app.get("/orders",(req: Request, res: Response) => {
 
     logger.info("Fetching orders examples");
-    res.send("Hello World");
+    res.send("Hello World from orders");
 });
 
 
