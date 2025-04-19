@@ -16,6 +16,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Set up env File
+        run: |
+          cat <<EOF > .env
+          PORT=${{ secrets.PORT }}
+          LOG_LEVEL=${{ secrets.LOG_LEVEL }}
+          JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}
+          JWT_REFRESH_ACCESS_TOKEN_SECRET=${{ secrets.JWT_REFRESH_ACCESS_TOKEN_SECRET }}
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          EOF
+          
       - name: Docker login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 

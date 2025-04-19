@@ -28,6 +28,6 @@ services:
     depends_on:
       - db
     env_file:
-      - /home/ubuntu/.env      
+      - .env      
 
   
