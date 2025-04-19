@@ -21,7 +21,7 @@ app.use(morganMiddleware);
 
 
 
-const port = process.env.PORT || 3006;
+const port = process.env.PORT || 3000;
 
 
 
