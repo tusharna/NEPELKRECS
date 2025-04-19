@@ -27,10 +27,15 @@ const port = process.env.PORT || 3000;
 
 app.get("/orders",(req: Request, res: Response) => {
 
-    logger.info("Fetching orders examples");
-    res.send("Hello World from orders");
+    logger.error("Fetching orders examples");
+    res.send("from orders");
 });
 
+app.get("/",(req: Request, res: Response) => {
+
+    logger.info("default Raouter");
+    res.send("Hello World");
+});
 
 app.get("/error", (req: Request, res: Response) => {
     throw new Error("Error fetching orders examples");
