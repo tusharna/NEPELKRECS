@@ -122,6 +122,9 @@ dist
 # DynamoDB Local files
 .dynamodb/
 
+# PostgresSQl Local DATABASE
+data/
+
 # TernJS port file
 .tern-port
 
