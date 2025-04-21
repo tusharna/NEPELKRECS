@@ -9,10 +9,21 @@ require("dotenv").config();
 import logger from "./middleware/logger";
 import morganMiddleware from "./middleware/morganMiddleware";
 import { setupSwagger } from "../swagger";
+import helmet from "helmet";
+const cors = require("cors");
 
 
 const app = express();
+const corseOptions ={
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+}
+
 setupSwagger(app);
+app.use(cors(corseOptions));
+app.use(helmet());
 app.use(express.json());
 
 app.use(userRouter);
