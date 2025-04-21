@@ -7,6 +7,8 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 import { Request, Response } from "express";
+import { userSchema } from "../schema/user";
+import { validateRequest, ValidationSource } from "../middleware/requestValidator";
 
 
 
@@ -17,9 +19,10 @@ router.get("/users", async (req: Request, res: Response) => {
     res.send(users);
 });
 
-router.post("/users", async (req: Request, res: Response) => {
+router.post("/users", validateRequest(userSchema, ValidationSource.BODY), async (req: Request, res: Response) => {
     try {
         const user = req.body;
+        //userSchema.parse(user);
         const salt = await bcrypt.genSalt(10);
         const hashedpwd = await bcrypt.hash(user.password, salt);
 
@@ -42,7 +45,7 @@ router.post("/users", async (req: Request, res: Response) => {
     }
 });
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", validateRequest(userSchema, ValidationSource.BODY), async (req: Request, res: Response) => {
     try {
         const { name, password, email } = req.body;
         const user = await prisma.user.findUnique({
