@@ -56,4 +56,4 @@ jobs:
       # Run the container using Docker Compose
       - name: Run Docker container using Docker Compose
         run: |
-          docker compose up -d  # Start the containers in detached mode
+          sudo docker compose up -d  # Run all services defined in docker-compose.yml
