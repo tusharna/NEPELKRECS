@@ -36,15 +36,20 @@ const port = process.env.PORT || 3000;
 
 
 
-app.get("/orders", verifyAuthToken, (req: Request, res: Response) => {
+app.get("/orders",(req: Request, res: Response) => {
 
-    logger.info("Fetching orders");
+    logger.error("Fetching orders examples");
+    res.send("from orders");
+});
+
+app.get("/",(req: Request, res: Response) => {
+
+    logger.info("default Raouter");
     res.send("Hello World");
 });
 
-
 app.get("/error", (req: Request, res: Response) => {
-    throw new Error("Error fetching orders");
+    throw new Error("Error fetching orders examples");
 });
 
 app.use(errorHandler)

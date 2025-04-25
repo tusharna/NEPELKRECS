@@ -5,6 +5,14 @@ const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   collectCoverage: true,
+  coverageThreshold: {
+    global: {
+      branches: 30,  // Minimum branch coverage percentage (e.g., 80%)
+      functions: 30, // Minimum function coverage percentage (e.g., 80%)
+      lines: 30,     // Minimum line coverage percentage (e.g., 80%)
+      statements: 30 // Minimum statement coverage percentage (e.g., 80%)
+    }
+  },
   collectCoverageFrom: [
     "src/**/*.{ts,js}",     // include all source files
     "!src/**/*.d.ts",       // exclude type declarations
@@ -20,3 +28,4 @@ export default config;
 //   type: 'module',
 //   testEnvironment: 'node',
 // };
+

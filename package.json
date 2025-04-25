@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
+  "scripts": {    
+    "start": "tsc && node dist/src/index.js",
+    "dev": "nodemon",
+    "build": "tsc",
     "test": "jest",
-    "test:coverage": "jest --coverage",
-    "start": "tsc && node dist/index.js",
-    "dev": "nodemon"
+    "test:coverage": "jest --coverage"    
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "dependencies": {
     "@prisma/client": "^6.6.0",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

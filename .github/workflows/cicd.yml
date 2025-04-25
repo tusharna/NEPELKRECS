@@ -1,0 +1,65 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "cicd" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up env File
+        run: |
+          cat <<EOF > .env
+          PORT=${{ secrets.PORT }}
+          LOG_LEVEL=${{ secrets.LOG_LEVEL }}
+          JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}
+          JWT_REFRESH_ACCESS_TOKEN_SECRET=${{ secrets.JWT_REFRESH_ACCESS_TOKEN_SECRET }}
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          EOF
+          
+      - name: Docker login
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      # Install dependencies and run tests with coverage
+      - name: Install dependencies and run tests with coverage
+        run: |
+          npm install
+          npm test -- --coverage  # Run Jest tests with code coverage
+
+      # Build the Docker image using Docker Compose
+      - name: Build Docker image using Docker Compose
+        run: docker compose build  # This builds all services defined in the docker-compose.yml
+
+      # Tag the app image
+      - name: Tag the app image
+        run: docker tag tusharna/cicd:latest ${{ secrets.DOCKER_USERNAME }}/cicd:latest
+
+      # Push the Docker image
+      - name: Push the Docker image
+        run: docker push $DOCKER_USERNAME/cicd:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      # Pull Docker image using Docker Compose
+      - name: Pull Docker image
+        run: sudo docker compose pull  # Pull all services defined in docker-compose.yml
+
+      # Delete old Docker container
+      - name: Delete old Docker container
+        run: sudo docker rm -f cicd
+
+      # Run the container using Docker Compose
+      - name: Run Docker container using Docker Compose
+        run: |
+          sudo docker compose up -d  # Run all services defined in docker-compose.yml
