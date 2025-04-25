@@ -1,10 +1,4 @@
-services:
-
-  volume-init:
-    image: busybox
-    command: sh -c "mkdir -p /var/lib/postgresql/data && chmod -R 777 /var/lib/postgresql/data"
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
+services:  
   db:
     image: postgres
     restart: always
@@ -20,9 +14,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U tushar"]
       interval: 11s
       timeout: 5s
-      retries: 5
-    depends_on:
-      - volume-init
+      retries: 5  
   adminer:
     image: adminer
     restart: always
