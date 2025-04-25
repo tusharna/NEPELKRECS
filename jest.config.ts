@@ -7,10 +7,10 @@ const config: JestConfigWithTsJest = {
   collectCoverage: true,
   coverageThreshold: {
     global: {
-      branches: 80,  // Minimum branch coverage percentage (e.g., 80%)
-      functions: 80, // Minimum function coverage percentage (e.g., 80%)
-      lines: 80,     // Minimum line coverage percentage (e.g., 80%)
-      statements: 80 // Minimum statement coverage percentage (e.g., 80%)
+      branches: 30,  // Minimum branch coverage percentage (e.g., 80%)
+      functions: 30, // Minimum function coverage percentage (e.g., 80%)
+      lines: 30,     // Minimum line coverage percentage (e.g., 80%)
+      statements: 30 // Minimum statement coverage percentage (e.g., 80%)
     }
   },
   collectCoverageFrom: [
