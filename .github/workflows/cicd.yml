@@ -47,7 +47,7 @@ jobs:
     steps:
       # Pull Docker image using Docker Compose
       - name: Pull Docker image
-        run: docker compose pull  # Pull all services defined in docker-compose.yml
+        run: sudo docker compose pull  # Pull all services defined in docker-compose.yml
 
       # Delete old Docker container
       - name: Delete old Docker container
