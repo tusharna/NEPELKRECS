@@ -28,6 +28,12 @@ jobs:
       - name: Docker login
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
+      # Install dependencies and run tests with coverage
+      - name: Install dependencies and run tests with coverage
+        run: |
+          npm install
+          npm test -- --coverage  # Run Jest tests with code coverage
+
       # Build the Docker image using Docker Compose
       - name: Build Docker image using Docker Compose
         run: docker compose build  # This builds all services defined in the docker-compose.yml
