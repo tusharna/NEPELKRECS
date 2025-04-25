@@ -7,18 +7,22 @@ services:
       - ./data/db:/var/lib/postgresql/data
     ports:
       - 5432:5432  # make sure you don't have another container running on 5432
-
     environment:
       - POSTGRES_DB=myDB
       - POSTGRES_USER=tushar
       - POSTGRES_PASSWORD=password
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tushar"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
-
+    depends_on:
+      - db
   app:
     image: tusharna/cicd:latest
     build: .
