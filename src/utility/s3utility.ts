@@ -1,3 +1,5 @@
+import logger from "../middleware/logger";
+
 const { S3Client, GetObjectCommand, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 require("dotenv").config();
@@ -11,15 +13,15 @@ const s3 = new S3Client({
 });
 
 // 2. Generate Pre-signed URL
-export async function generateSignedURL() {
+export async function generateSignedURL(Key:string) {
 
     const command = new GetObjectCommand({
         Bucket: 'tushar-nodeupload',
-        Key: `IMG-20170205-WA0029.jpg`,
+        Key: Key,
     });
 
     const signedUrl = await getSignedUrl(s3, command, { expiresIn: 30 }); // valid for 1 hour
-    console.log('Pre-Signed URL:', signedUrl);
+    logger.info('Pre-Signed URL:', signedUrl);
     return signedUrl;
 }
 
@@ -33,8 +35,8 @@ export async function uploadPhoto(folderName: string, fileName: string, content:
         };
         const command = new PutObjectCommand(parmas);
         const Response = s3.send(command);
-        console.log('✅ Uploaded successfully!', await Response);
+        return await Response;        
     } catch (err) {
-        console.log(err);
+        logger.error(err);
     }
 }
