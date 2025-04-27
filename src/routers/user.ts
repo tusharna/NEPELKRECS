@@ -9,9 +9,10 @@ const router = express.Router();
 import { Request, Response } from "express";
 import { userSchema } from "../schema/user";
 import { validateRequest, ValidationSource } from "../middleware/requestValidator";
+import multer from "multer";
+import { uploadPhoto,generateSignedURL } from "../utility/s3utility";
 
-
-
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/users", async (req: Request, res: Response) => {
     logger.info('fetching users');
@@ -37,6 +38,73 @@ router.post("/users", validateRequest(userSchema, ValidationSource.BODY), async 
         logger.debug("User added successfully");
         const users = await prisma.user.findMany();
         res.send(users);
+    } catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .send({ error: "An error occurred while processing your request." });
+    }
+});
+
+router.post("/uploadPhoto", upload.single("file"), async (req: Request, res: Response) => {
+    try {
+        const file = req.file;
+        const email = req.body.email;
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email: req.body.email,
+            },
+        });
+        if (user) {
+            if (file) {
+                const uploadResult = await uploadPhoto(user.name, file.originalname, file);
+                if (uploadResult?.$metadata?.httpStatusCode == 200) {
+                    const result = await prisma.user.update({
+                        where: {
+                            email: email
+
+                        }, data: {
+                            profilePhoto: `${user.name}/${file.originalname}`
+                        }
+                    })
+                    res.send(result);
+                }
+            } else {
+                return res.status(400).send({ error: "File is missing" });
+            }
+        } else {
+            res.sendStatus(404);
+        }
+
+
+    } catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .send({ error: "An error occurred while processing your request." });
+    }
+});
+
+
+router.post("/generatePreSignedURL", async (req: Request, res: Response) => {
+    try {
+
+        const { email } = req.body;
+
+        const user = await prisma.user.findUnique({
+            where: { email },
+        });
+
+        if (user?.profilePhoto) {
+            logger.info("Generating pre-signed URL");
+            const url=await generateSignedURL(user.profilePhoto);
+            res.send(url);
+        } else {
+            res.sendStatus(404);
+        }
+
+
     } catch (error) {
         console.error(error);
         res
