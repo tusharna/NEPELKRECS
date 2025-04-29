@@ -16,7 +16,7 @@ const s3 = new S3Client({
 export async function generateSignedURL(Key:string) {
 
     const command = new GetObjectCommand({
-        Bucket: 'tushar-nodeupload',
+        Bucket: 'tushar-lambdaupload',
         Key: Key,
     });
 
