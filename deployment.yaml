@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nepelkrecs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nepelkrecs
+  template:
+    metadata:
+      labels:
+        app: nepelkrecs
+    spec:
+      containers:
+        - name: nepelkrecs
+          image: tusharna/nepelkrecs:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3006
+

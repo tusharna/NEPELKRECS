@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nepelkrecs-service
+  labels:
+    app: nepelkrecs
+spec:
+  selector:
+    app: nepelkrecs
+  ports:
+    - port: 3006
+      targetPort: 3006
+      protocol: TCP
+  type: NodePort
